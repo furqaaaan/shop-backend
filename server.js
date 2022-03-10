@@ -1,12 +1,13 @@
 const express = require('express');
 const db = require('./config/db');
+const config = require('./config/config');
 
 const app = express();
 
 // DATABASE
 db.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
-  .then(db.sync())
+  .then(db.sync({ force: true }))
   .catch((err) => {
     console.error('Unable to connect to the database:', error);
   });
@@ -19,5 +20,6 @@ app.use('/api/users', require('./routes/users'));
 // app.use('/api/gem', require('./routes/api/gem'));
 // app.use('/api/shop', require('./routes/api/shop'));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(config.app.port, () =>
+  console.log(`Server running on port ${config.app.port}`)
+);

@@ -9,7 +9,7 @@ const User = db.define('User', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  username: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -23,6 +23,10 @@ const User = db.define('User', {
   },
 });
 
-User.hasOne(Wallet);
-User.hasMany(Order);
+User.hasOne(Wallet, {
+  foreignKey: 'userId',
+});
+User.hasMany(Order, {
+  foreignKey: 'userId',
+});
 module.exports = User;

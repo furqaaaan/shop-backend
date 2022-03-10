@@ -1,6 +1,14 @@
 const { Sequelize } = require('sequelize');
-const config = require('config');
+const conf = require('./config');
 
-const sequelize = new Sequelize(config.get('mysqluri'));
+const {
+  db: { host, port, database, username, password, dialect },
+} = conf;
+
+const sequelize = new Sequelize(database, username, password, {
+  dialect,
+  host,
+  port,
+});
 
 module.exports = sequelize;
