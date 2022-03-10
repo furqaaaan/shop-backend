@@ -11,7 +11,7 @@ const newUser = async (req, res) => {
 
   try {
     const { name, email, password } = req.body;
-    const user = await createUser(res, name, email, password);
+    const user = await createUser(name, email, password);
     await createWallet(user);
 
     const payload = {
