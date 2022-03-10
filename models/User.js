@@ -3,25 +3,35 @@ const db = require('../config/db');
 const Wallet = require('./Wallet');
 const Order = require('./Order');
 
-const User = db.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+const User = db.define(
+  'User',
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+  {
+    scopes: {
+      withoutPassword: {
+        attributes: { exclude: ['password'] },
+      },
+    },
+  }
+);
 
 User.hasOne(Wallet, {
   foreignKey: 'userId',
@@ -29,4 +39,5 @@ User.hasOne(Wallet, {
 User.hasMany(Order, {
   foreignKey: 'userId',
 });
+
 module.exports = User;

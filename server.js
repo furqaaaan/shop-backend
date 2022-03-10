@@ -7,7 +7,7 @@ const app = express();
 // DATABASE
 db.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
-  .then(db.sync({ force: true }))
+  .then(db.sync({ alter: true }))
   .catch((err) => {
     console.error('Unable to connect to the database:', error);
   });
@@ -16,7 +16,7 @@ db.authenticate()
 app.use(express.json({ extended: false }));
 
 app.use('/api/users', require('./routes/users'));
-// app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/auth', require('./routes/auth'));
 // app.use('/api/gem', require('./routes/api/gem'));
 // app.use('/api/shop', require('./routes/api/shop'));
 

@@ -13,7 +13,7 @@ const newUser = async (req, res) => {
 
   try {
     const { name, email, password } = req.body;
-    const user = await createUser(name, email, password);
+    const user = await createUser(res, name, email, password);
     await createWallet(user);
 
     const payload = {
@@ -21,11 +21,21 @@ const newUser = async (req, res) => {
         id: user.id,
       },
     };
-    res.json({ token: createJwtToken(payload) });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    return res.json({ token: createJwtToken(payload) });
+  } catch (error) {
+    if (error.name == 'EmailInUseError') {
+      return res.status(404).json({
+        errors: [{ msg: error.message }],
+      });
+    }
+    console.error(error.message);
+    return res.status(500).send('Server error');
   }
+};
+
+const getLoggedInUser = async (req, res) => {
+  const user = await User.scope('withoutPassword').findByPk(req.user.id);
+  res.json(user);
 };
 
 async function createUser(name, email, password) {
@@ -34,9 +44,10 @@ async function createUser(name, email, password) {
   });
 
   if (user) {
-    return res.status(400).json({
-      errors: [{ msg: 'User already exists' }],
-    });
+    throw {
+      name: 'EmailInUseError',
+      message: 'Email is already in use.',
+    };
   }
 
   return await User.create({
@@ -63,4 +74,4 @@ function createJwtToken(payload) {
   });
 }
 
-module.exports = { newUser };
+module.exports = { newUser, getLoggedInUser };
