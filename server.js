@@ -7,7 +7,7 @@ const app = express();
 // DATABASE
 db.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
-  .then(db.sync({ alter: true }))
+  .then(db.sync({ alter: true })) // for development
   .catch((err) => {
     console.error('Unable to connect to the database:', error);
   });
