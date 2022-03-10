@@ -9,9 +9,11 @@ const Wallet = db.define('Wallet', {
   },
   gemBalance: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
   goldBalance: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
 });
 

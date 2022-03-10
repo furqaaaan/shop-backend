@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Gold 1x",
+    "gemCost": 10,
+    "gold": 10
+  },
+  {
+    "id": 2,
+    "name": "Gold 2x",
+    "gemCost": 20,
+    "gold": 50
+  }
+]

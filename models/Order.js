@@ -7,11 +7,16 @@ const Order = db.define('Order', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  gemBalance: {
-    type: DataTypes.INTEGER,
+  itemName: {
+    type: DataTypes.STRING,
   },
-  goldBalance: {
+  gemPaid: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  goldAwarded: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
 });
 
