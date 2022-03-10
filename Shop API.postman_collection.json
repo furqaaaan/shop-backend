@@ -95,7 +95,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiN2U5NzQwODMtYmJiMS00ZWU0LTk0NGQtMDhhMmZmYzY0YmM1In0sImlhdCI6MTY0Njg5NzQ2NCwiZXhwIjoxNjUwNDk3NDY0fQ.zJVuXT1hcTfbBpa8wVNzoLgCSTXrwLzKIOG4mnTc8jk",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
