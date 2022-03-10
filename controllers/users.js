@@ -1,9 +1,7 @@
 const { validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Wallet = require('../models/Wallet');
-const config = require('../config/config');
+const { hashPassword, createJwtToken } = require('../utils/authUtil');
 
 const newUser = async (req, res) => {
   const errors = validationResult(req);
@@ -60,17 +58,6 @@ async function createUser(name, email, password) {
 async function createWallet(user) {
   return await Wallet.create({
     userId: user.id,
-  });
-}
-
-async function hashPassword(password) {
-  const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(password, salt);
-}
-
-function createJwtToken(payload) {
-  return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.expiry,
   });
 }
 

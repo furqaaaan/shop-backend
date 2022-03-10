@@ -1,8 +1,7 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const config = require('../config/config');
+const { createJwtToken } = require('../utils/authUtil');
 
 const login = async (req, res) => {
   const errors = validationResult(req);
@@ -25,8 +24,8 @@ const login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
-      }
-      
+    }
+
     const payload = {
       user: {
         id: user.id,
@@ -38,11 +37,5 @@ const login = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
-
-function createJwtToken(payload) {
-  return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.expiry,
-  });
-}
 
 module.exports = { login };
