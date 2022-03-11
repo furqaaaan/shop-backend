@@ -1,13 +1,12 @@
 const express = require('express');
-const db = require('./config/db');
 const config = require('./config/config');
-
+const sequelize = require('./models').sequelize;
 const app = express();
 
-// DATABASE
-db.authenticate()
+sequelize
+  .authenticate()
   .then(() => console.log('Connection has been established successfully.'))
-  .then(db.sync({ alter: true })) // for development
+  .then(sequelize.sync({ alter: true })) // for development
   .catch((err) => {
     console.error('Unable to connect to the database:', error);
   });

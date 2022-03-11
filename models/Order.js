@@ -1,23 +1,22 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/db');
+module.exports = (sequelize, Sequelize) => {
+  const Order = sequelize.define('Order', {
+    id: {
+      type: Sequelize.DataTypes.UUID,
+      defaultValue: Sequelize.DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    itemName: {
+      type: Sequelize.DataTypes.STRING,
+    },
+    gemPaid: {
+      type: Sequelize.DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    goldAwarded: {
+      type: Sequelize.DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+  });
 
-const Order = db.define('Order', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  itemName: {
-    type: DataTypes.STRING,
-  },
-  gemPaid: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  goldAwarded: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-});
-
-module.exports = Order;
+  return Order;
+};

@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const Wallet = require('../models/Wallet');
+var Wallet = require('../models').Wallet;
 
 const getGems = async (req, res) => {
   const errors = validationResult(req);

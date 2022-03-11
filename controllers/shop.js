@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
-const Wallet = require('../models/Wallet');
-const Order = require('../models/Order');
+var Wallet = require('../models').Wallet;
+var Order = require('../models').Order;
 const itemList = require('../res/items.json');
 
 const getItems = async (req, res) => {

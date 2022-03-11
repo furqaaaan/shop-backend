@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
-const User = require('../models/User');
-const Wallet = require('../models/Wallet');
+var User = require('../models').User;
+const Wallet = require('../models').Wallet;
 const { hashPassword, createJwtToken } = require('../utils/authUtil');
 
 const newUser = async (req, res) => {

@@ -1,43 +1,33 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/db');
-const Wallet = require('./Wallet');
-const Order = require('./Order');
-
-const User = db.define(
-  'User',
-  {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  },
-  {
-    scopes: {
-      withoutPassword: {
-        attributes: { exclude: ['password'] },
+module.exports = (sequelize, Sequelize) => {
+  const User = sequelize.define(
+    'User',
+    {
+      id: {
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: Sequelize.DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      name: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
       },
     },
-  }
-);
+    {
+      scopes: {
+        withoutPassword: {
+          attributes: { exclude: ['password'] },
+        },
+      },
+    }
+  );
 
-User.hasOne(Wallet, {
-  foreignKey: 'userId',
-});
-User.hasMany(Order, {
-  foreignKey: 'userId',
-});
-
-module.exports = User;
+  return User;
+};

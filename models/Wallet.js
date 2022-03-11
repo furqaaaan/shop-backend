@@ -1,20 +1,19 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/db');
+module.exports = (sequelize, Sequelize) => {
+  const Wallet = sequelize.define('Wallet', {
+    id: {
+      type: Sequelize.DataTypes.UUID,
+      defaultValue: Sequelize.DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    gemBalance: {
+      type: Sequelize.DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    goldBalance: {
+      type: Sequelize.DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+  });
 
-const Wallet = db.define('Wallet', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  gemBalance: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  goldBalance: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-});
-
-module.exports = Wallet;
+  return Wallet;
+};
