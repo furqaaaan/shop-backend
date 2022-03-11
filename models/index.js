@@ -1,15 +1,27 @@
 var Sequelize = require('sequelize');
 const conf = require('../config/config');
 
-const {
-  db: { host, port, database, username, password, dialect },
-} = conf;
+let sequelize;
 
-const sequelize = new Sequelize(database, username, password, {
-  dialect,
-  host,
-  port,
-});
+switch (process.env.NODE_ENV) {
+  case 'test':
+    sequelize = new Sequelize('sqlite::memory:', {
+      logging: false,
+    });
+    break;
+
+  default:
+    const {
+      db: { host, port, database, username, password, dialect },
+    } = conf;
+
+    sequelize = new Sequelize(database, username, password, {
+      dialect,
+      host,
+      port,
+    });
+    break;
+}
 
 const db = {};
 
@@ -26,5 +38,9 @@ db.User.hasOne(db.Wallet, {
 db.User.hasMany(db.Order, {
   foreignKey: 'userId',
 });
+
+if (process.env.NODE_ENV === 'dev') {
+  sequelize.sync({ alter: true });
+}
 
 module.exports = db;

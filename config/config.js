@@ -19,6 +19,13 @@ const dev = {
   },
 };
 
+const test = {
+  jwt: {
+    secret: 'somerandomsecret',
+    expiry: 3600000,
+  },
+};
+
 const prod = {
   app: {
     port: parseInt(process.env.DEV_APP_PORT) || 3000,
@@ -40,6 +47,7 @@ const prod = {
 const config = {
   dev,
   prod,
+  test,
 };
 
 module.exports = config[env];

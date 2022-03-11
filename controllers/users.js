@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 var User = require('../models').User;
 const Wallet = require('../models').Wallet;
 const { hashPassword, createJwtToken } = require('../utils/authUtil');
+const conf = require('../config/config');
 
 const newUser = async (req, res) => {
   const errors = validationResult(req);
@@ -22,12 +23,12 @@ const newUser = async (req, res) => {
     return res.json({ token: createJwtToken(payload) });
   } catch (error) {
     if (error.name == 'EmailInUseError') {
-      return res.status(404).json({
+      return res.status(400).json({
         errors: [{ msg: error.message }],
       });
     }
     console.error(error.message);
-    return res.status(500).send('Server error');
+    return res.status(500).send({ errors: [{ msg: error.message }] });
   }
 };
 
