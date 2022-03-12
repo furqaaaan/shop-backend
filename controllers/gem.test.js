@@ -3,12 +3,11 @@ const gemController = require('../controllers/gem');
 let userWallet = {
   gemBalance: 0,
   save: () => {},
+  findOne: () => userWallet,
 };
 
 jest.mock('../models', () => ({
-  Wallet: {
-    findOne: () => userWallet,
-  },
+  Wallet: userWallet,
 }));
 
 describe('USER APIs', () => {
