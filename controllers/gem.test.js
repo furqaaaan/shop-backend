@@ -24,9 +24,18 @@ describe('USER APIs', () => {
     let statusVal, sendVal, jsonVal;
 
     const res = {
-      status: (val) => (statusVal = val),
-      send: (val) => (sendVal = val),
-      json: (val) => (jsonVal = val),
+      status: (val) => {
+        statusVal = val;
+        return res;
+      },
+      send: (val) => {
+        sendVal = val;
+        return res;
+      },
+      json: (val) => {
+        jsonVal = val;
+        return res;
+      },
     };
 
     await gemController.getGems(req, res);
